@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
@@ -13,12 +14,14 @@ public class CollisionHandler : MonoBehaviour
             case "Finish":
                 Debug.Log("Hit Finish Object");
                 break;
-            case "Fuel":
-                Debug.Log("Hit Fuel Object");
-                break;
             default:
-                Debug.Log("Hit Untagged Object");
+                ReloadLevel();
                 break;
         }
+    }
+
+    void ReloadLevel() {
+        int currentSceneIndex = (SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(currentSceneIndex);
     }
 }
