@@ -16,14 +16,19 @@ public class CollisionHandler : MonoBehaviour
     ParticleSystem gameParticleSystem;
 
     bool isTransitioning = false;
+    bool collisionDisabled = false;
 
     void Start() {
            audioSource = GetComponent<AudioSource>();
            gameParticleSystem = GetComponent<ParticleSystem>();
         }
+
+    void Update() {
+        ActionDevTool();
+    }
     
     private void OnCollisionEnter(Collision other) {
-        if (isTransitioning) {
+        if (isTransitioning || collisionDisabled) {
             return;
         }
 
@@ -70,5 +75,14 @@ public class CollisionHandler : MonoBehaviour
             nextSceneIndex = 0;
         }
         SceneManager.LoadScene(nextSceneIndex);
+    }
+
+    void ActionDevTool() {
+        if (Input.GetKeyDown(KeyCode.L)) {
+            LoadNextLevel();  
+        }
+        if (Input.GetKeyDown(KeyCode.C)) {
+            collisionDisabled = !collisionDisabled;
+        } 
     }
 }
